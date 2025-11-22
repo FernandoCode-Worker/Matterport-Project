@@ -1,7 +1,8 @@
-const iframe = document.getElementById("showcase-iframe");
+window.addEventListener("DOMContentLoaded", async () => {
+  const iframe = document.getElementById("showcase-iframe");
 
-async function init() {
   try {
+    // Connect to SDK (no import, no modules)
     const sdk = await window.MP_SDK.connect(iframe);
     console.log("SDK loaded", sdk);
 
@@ -17,7 +18,5 @@ async function init() {
   } catch (err) {
     console.error("SDK connection or data error:", err);
   }
-}
-
-window.addEventListener("DOMContentLoaded", init);
+});
 
