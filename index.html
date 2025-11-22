@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matterport SDK Example</title>
+        <script type="importmap">
+            {
+                "imports": {
+                    "MP_SDK": "https://static.matterport.com/showcase-sdk/latest/bootstrap.js"
+                }
+            }
+        </script>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <h1 style=" margin-left: 66%; transform:translateX(-66%)">Matterport 3D Tour</h1>
+  <div class="navbar" style=" margin-left: 50%; transform:translateX(-50%); background-color: #ffff00;">
+    <div class="navbar-tggler" style="background-color: #0000ff;" onclick="AddComplianceCode()">Add Items</div>
+    <div class="navbar-tggler" style="background-color: #00ff00;" onclick="Navigation()">Navigation</div>
+    <div class="navbar-tggler" style="background-color: #0000ff; color:#ffffff" onclick="InsertMultimedia()">Insert Multimedia</div>
+  </div>
+  <button style="background-color: #0000ff;" value="AddComplianceCode" onclick="AddComplianceCode()">AddComplianceCode</button>
+  <form class="d-none">
+    <p>Building height in m</p>
+    <input type="number" id="building_height" name="building_height" placeholder="Enter building height">
+    <p>Staircase Length</p>
+    <input type="number" id="staircase_length" name="staircase_length" placeholder="Enter staircase length">
+    <p>Number of Floors</p>
+    
+    <button type="button" onclick="ComplianceCode()">Submit</button>
+  </form>
+  <div id="matterport_frame">
+    <iframe
+        id="showcase-iframe"
+        width="853"
+        height="480"
+        src="https://my.matterport.com/show/?m=kZka3egdYxi&play=1"
+        frameborder="0"
+        allow="fullscreen; xr-spatial-tracking"
+        allowfullscreen
+        title="Matterport 3D Tour"
+    ></iframe>
+  </div>
+    <!--<script type="module" src="app.js"></script>-->
+    <script type="module" src="test.js"></script>
+    <!--<script src="https://static.matterport.com/showcase-sdk/latest.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!--
+    <script type="module">
+    import { MP_SDK } from "MP_SDK";
+    // THREE.js is often imported for vector math, but we'll use 
+    // the SDK's internal types for simplicity here.
+
+    const iframe = document.getElementById('showcase-iframe');
+
+    // 1. Initialize the SDK
+    MP_SDK.connect(iframe, 'v1')
+        .then(sdk => {
+            console.log("Matterport SDK successfully connected. Click on a door!");
+            
+            // 2. Listen for a single click event
+            sdk.Pointer.intersection.subscribe(intersection => {
+                if (!intersection) {
+                    console.log("Clicked background/skybox.");
+                    return;
+                }
+                
+                // The intersection object is a result of a 3D raycast, 
+                // leveraging the Cortex-generated mesh.
+                
+                // Get the coordinates in the Matterport World coordinate system.
+                const { x, y, z } = intersection.position;
+                
+                // Check if the click is on a "Wall" (the general door surface will be classified as a wall)
+                if (intersection.object.material.name.includes('Wall')) {
+                    console.log(`Potential Door Click Detected!`);
+                    console.log(`World Coordinates (X, Y, Z): (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);
+                    
+                    // Optional: Place a temporary Mattertag at the click location
+                    sdk.Mattertag.add({
+                        label: 'Clicked Location',
+                        description: `Coordinates: X:${x.toFixed(1)}, Y:${y.toFixed(1)}, Z:${z.toFixed(1)}`,
+                        anchorPosition: { x, y, z },
+                        stemVector: { x: 0, y: 0.5, z: 0 }, // Stem points upward
+                        media: { type: sdk.Mattertag.MediaType.NONE }
+                    })
+                    .then(id => {
+                        console.log(`Mattertag placed at the click point with ID: ${id}`);
+                        // Automatically remove the tag after 10 seconds for cleanliness
+                        setTimeout(() => sdk.Mattertag.remove(id), 10000);
+                    });
+                } else {
+                    console.log(`Clicked on a non-wall object (Type: ${intersection.object.type}).`);
+                }
+            });
+        })
+        .catch(error => {
+            console.error("SDK Connection Error:", error);
+        });
+</script>
+    -->
+</body>
+</html>
